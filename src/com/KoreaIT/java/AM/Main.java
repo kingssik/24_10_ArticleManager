@@ -59,7 +59,20 @@ public class Main {
 
         int id = Integer.parseInt(cmdDiv[2]);
 
-        System.out.printf("%d번 게시글은 없습니다.\n",id);
+        boolean found = false;
+
+        for(int i = 0; i < articles.size(); i++){
+          Article article = articles.get(i);
+          if(article.id == id){
+            found = true;
+            break;
+          }
+        }
+        if(found == false){
+          System.out.printf("%d번 게시글은 없습니다.\n",id);
+        }else {
+          System.out.println("있던데???");
+        }
 
       } else {
         System.out.println("존재하지 않는 명령어입니다");
