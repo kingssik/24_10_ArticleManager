@@ -20,6 +20,7 @@ public class Main {
       }
 
       if (cmd.equals("system exit")) {
+        System.out.println("==프로그램 종료==");
         break;
       }
 
@@ -28,7 +29,6 @@ public class Main {
           System.out.println("게시글이 없습니다");
           continue;
         } else {
-          // 존재하는 게시글 전부 출력하기
           System.out.println("번호  |  제목");
           for (int i = articles.size() - 1; i >= 0; i--) {
             Article article = articles.get(i);
@@ -48,11 +48,23 @@ public class Main {
         articles.add(article);
 
         System.out.printf("%d번 글이 생성되었습니다\n", id);
+      } else if (cmd.startsWith("article detail ")) {
+
+        String[] cmdDiv = cmd.split(" ");
+        System.out.println(cmdDiv[0]);
+        System.out.println(cmdDiv[1]);
+        System.out.println(cmdDiv[2]);
+
+        // article detail 1 => "1" -> 1
+
+        int id = Integer.parseInt(cmdDiv[2]);
+
+        System.out.printf("%d번 게시글은 없습니다.\n",id);
+
       } else {
         System.out.println("존재하지 않는 명령어입니다");
       }
     }
-
   }
 }
 
