@@ -1,5 +1,7 @@
 package com.KoreaIT.java.AM;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,6 +9,7 @@ import java.util.Scanner;
 public class Main {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
+
 
     int lastArticleId = 0;
     List<Article> articles = new ArrayList<>();
@@ -39,39 +42,44 @@ public class Main {
         int id = lastArticleId + 1;
         lastArticleId = id;
 
+        String regDate = test.getNowDateTimeStr();
+
         System.out.printf("제목 : ");
         String title = sc.nextLine();
         System.out.printf("내용 : ");
         String body = sc.nextLine();
 
-        Article article = new Article(id, title, body);
+        Article article = new Article(id, regDate, title, body);
         articles.add(article);
 
         System.out.printf("%d번 글이 생성되었습니다\n", id);
       } else if (cmd.startsWith("article detail ")) {
 
         String[] cmdDiv = cmd.split(" ");
-        System.out.println(cmdDiv[0]);
-        System.out.println(cmdDiv[1]);
-        System.out.println(cmdDiv[2]);
+//        System.out.println(cmdDiv[0]);
+//        System.out.println(cmdDiv[1]);
+//        System.out.println(cmdDiv[2]);
 
         // article detail 1 => "1" -> 1
 
         int id = Integer.parseInt(cmdDiv[2]);
 
-        boolean found = false;
+        Article foundArticle = null;
 
-        for(int i = 0; i < articles.size(); i++){
+        for (int i = 0; i < articles.size(); i++) {
           Article article = articles.get(i);
-          if(article.id == id){
-            found = true;
+          if (article.id == id) {
+            foundArticle = article;
             break;
           }
         }
-        if(found == false){
-          System.out.printf("%d번 게시글은 없습니다.\n",id);
-        }else {
-          System.out.println("있던데???");
+        if (foundArticle == null) {
+          System.out.printf("%d번 게시글은 없습니다.\n", id);
+        } else {
+          System.out.println("번호 : " + foundArticle.id);
+          System.out.println("날짜 : " + foundArticle.regDate);
+          System.out.println("제목 : " + foundArticle.title);
+          System.out.println("내용 : " + foundArticle.body);
         }
 
       } else {
@@ -83,11 +91,13 @@ public class Main {
 
 class Article {
   int id;
+  String regDate;
   String title;
   String body;
 
-  public Article(int id, String title, String body) {
+  public Article(int id, String regDate, String title, String body) {
     this.id = id;
+    this.regDate = regDate;
     this.title = title;
     this.body = body;
   }
