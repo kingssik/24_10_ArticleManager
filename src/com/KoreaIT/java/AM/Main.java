@@ -1,7 +1,5 @@
 package com.KoreaIT.java.AM;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,25 +29,26 @@ public class Main {
         if (articles.size() == 0) {
           System.out.println("게시글이 없습니다");
           continue;
-        } else {
-          System.out.println("번호  |  제목");
-          for (int i = articles.size() - 1; i >= 0; i--) {
-            Article article = articles.get(i);
-            System.out.printf("%d  |  %s\n", article.id, article.title);
-          }
         }
+        System.out.println("번호  |  제목");
+        for (int i = articles.size() - 1; i >= 0; i--) {
+          Article article = articles.get(i);
+          System.out.printf("%d  |  %s\n", article.id, article.title);
+        }
+
       } else if (cmd.equals("article write")) {
         int id = lastArticleId + 1;
         lastArticleId = id;
 
         String regDate = test.getNowDateTimeStr();
+        String updateDate = test.getNowDateTimeStr();
 
         System.out.printf("제목 : ");
         String title = sc.nextLine();
         System.out.printf("내용 : ");
         String body = sc.nextLine();
 
-        Article article = new Article(id, regDate, title, body);
+        Article article = new Article(id, regDate, updateDate, title, body);
         articles.add(article);
 
         System.out.printf("%d번 글이 생성되었습니다\n", id);
@@ -57,8 +56,6 @@ public class Main {
 
         String[] cmdDiv = cmd.split(" ");
 
-        // article detail 1 => "1" -> 1
-
         int id = Integer.parseInt(cmdDiv[2]);
 
         Article foundArticle = null;
@@ -72,41 +69,69 @@ public class Main {
         }
         if (foundArticle == null) {
           System.out.printf("%d번 게시글은 없습니다.\n", id);
-        } else {
-          System.out.println("번호 : " + foundArticle.id);
-          System.out.println("날짜 : " + foundArticle.regDate);
-          System.out.println("제목 : " + foundArticle.title);
-          System.out.println("내용 : " + foundArticle.body);
+          continue;
         }
+        System.out.println("번호 : " + foundArticle.id);
+        System.out.println("작성 날짜 : " + foundArticle.regDate);
+        System.out.println("수정 날짜 : " + foundArticle.updateDate);
+        System.out.println("제목 : " + foundArticle.title);
+        System.out.println("내용 : " + foundArticle.body);
 
       } else if (cmd.startsWith("article delete ")) {
 
         String[] cmdDiv = cmd.split(" ");
 
-        // article detail 1 => "1" -> 1
-
         int id = Integer.parseInt(cmdDiv[2]);
 
         Article foundArticle = null;
-//        int foundIndex = -1;
 
         for (int i = 0; i < articles.size(); i++) {
           Article article = articles.get(i);
           if (article.id == id) {
             foundArticle = article;
-//            foundIndex = i;
             break;
           }
         }
         if (foundArticle == null) {
-//        if (foundIndex == -1) {
           System.out.printf("%d번 게시글은 없습니다.\n", id);
-        } else {
-//          articles.remove(id - 1);
-//          articles.remove(foundIndex);
-          articles.remove(foundArticle);
-          System.out.println(id + "번 게시글이 삭제되었습니다.");
+          continue;
         }
+        articles.remove(foundArticle);
+        System.out.println(id + "번 게시글이 삭제되었습니다.");
+
+
+      } else if (cmd.startsWith("article modify ")) {
+
+        String[] cmdDiv = cmd.split(" ");
+
+        int id = Integer.parseInt(cmdDiv[2]);
+
+        Article foundArticle = null;
+
+        for (int i = 0; i < articles.size(); i++) {
+          Article article = articles.get(i);
+          if (article.id == id) {
+            foundArticle = article;
+            break;
+          }
+        }
+        if (foundArticle == null) {
+          System.out.printf("%d번 게시글은 없습니다.\n", id);
+          continue;
+        }
+        System.out.println("기존 제목 : " + foundArticle.title);
+        System.out.println("기존 내용 : " + foundArticle.body);
+        System.out.print("새 제목 : ");
+        String newTitle = sc.nextLine();
+        System.out.print("새 내용 : ");
+        String newBody = sc.nextLine();
+
+        foundArticle.title = newTitle;
+        foundArticle.body = newBody;
+        foundArticle.updateDate = test.getNowDateTimeStr();
+
+        System.out.println(id + "번 게시글이 수정되었습니다.");
+
 
       } else {
         System.out.println("존재하지 않는 명령어입니다");
@@ -118,12 +143,14 @@ public class Main {
 class Article {
   int id;
   String regDate;
+  String updateDate;
   String title;
   String body;
 
-  public Article(int id, String regDate, String title, String body) {
+  public Article(int id, String regDate, String updateDate, String title, String body) {
     this.id = id;
     this.regDate = regDate;
+    this.updateDate = updateDate;
     this.title = title;
     this.body = body;
   }
