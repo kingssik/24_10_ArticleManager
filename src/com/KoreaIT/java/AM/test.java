@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 
 public class test {
 
+
+
   /** 현재 날짜와 시간을 반환하는 함수 (str)**/
   public static String getNowDateTimeStr() {
     // 현재 날짜/시간
