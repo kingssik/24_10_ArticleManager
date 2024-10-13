@@ -87,23 +87,24 @@ public class Main {
 
         int id = Integer.parseInt(cmdDiv[2]);
 
-//        Article foundArticle = null;
-        int foundIndex = -1;
+        Article foundArticle = null;
+//        int foundIndex = -1;
 
         for (int i = 0; i < articles.size(); i++) {
           Article article = articles.get(i);
           if (article.id == id) {
-//            foundArticle = article;
-            foundIndex = i;
+            foundArticle = article;
+//            foundIndex = i;
             break;
           }
         }
-//        if (foundArticle == null) {
-        if (foundIndex == -1) {
+        if (foundArticle == null) {
+//        if (foundIndex == -1) {
           System.out.printf("%d번 게시글은 없습니다.\n", id);
         } else {
-          articles.remove(id - 1);
-          articles.remove(foundIndex);
+//          articles.remove(id - 1);
+//          articles.remove(foundIndex);
+          articles.remove(foundArticle);
           System.out.println(id + "번 게시글이 삭제되었습니다.");
         }
 
