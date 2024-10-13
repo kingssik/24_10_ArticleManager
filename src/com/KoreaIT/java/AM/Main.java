@@ -56,9 +56,6 @@ public class Main {
       } else if (cmd.startsWith("article detail ")) {
 
         String[] cmdDiv = cmd.split(" ");
-//        System.out.println(cmdDiv[0]);
-//        System.out.println(cmdDiv[1]);
-//        System.out.println(cmdDiv[2]);
 
         // article detail 1 => "1" -> 1
 
@@ -80,6 +77,34 @@ public class Main {
           System.out.println("날짜 : " + foundArticle.regDate);
           System.out.println("제목 : " + foundArticle.title);
           System.out.println("내용 : " + foundArticle.body);
+        }
+
+      } else if (cmd.startsWith("article delete ")) {
+
+        String[] cmdDiv = cmd.split(" ");
+
+        // article detail 1 => "1" -> 1
+
+        int id = Integer.parseInt(cmdDiv[2]);
+
+//        Article foundArticle = null;
+        int foundIndex = -1;
+
+        for (int i = 0; i < articles.size(); i++) {
+          Article article = articles.get(i);
+          if (article.id == id) {
+//            foundArticle = article;
+            foundIndex = i;
+            break;
+          }
+        }
+//        if (foundArticle == null) {
+        if (foundIndex == -1) {
+          System.out.printf("%d번 게시글은 없습니다.\n", id);
+        } else {
+          articles.remove(id - 1);
+          articles.remove(foundIndex);
+          System.out.println(id + "번 게시글이 삭제되었습니다.");
         }
 
       } else {
