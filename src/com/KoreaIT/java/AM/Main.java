@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class Main {
   static List<Article> articles = new ArrayList<>();
+  static List<Member> members = new ArrayList<>();
+
   public static void main(String[] args) {
 
     makeTestData();
@@ -13,7 +15,7 @@ public class Main {
     Scanner sc = new Scanner(System.in);
 
     int lastArticleId = 3;
-
+    int lastMemberId = 0;
 
     while (true) {
       System.out.printf("명령어 ) ");
@@ -28,7 +30,32 @@ public class Main {
         break;
       }
 
-      if (cmd.equals("article list")) {
+
+      if (cmd.equals("member join")) {
+        int id = lastMemberId + 1;
+        lastMemberId = id;
+
+        String regDate = test.getNowDateTimeStr();
+        String loginId = null;
+        while (true) {
+          System.out.printf("로그인 아이디 : ");
+          loginId = sc.nextLine();
+          if (isJoinableLoginId(loginId) == false) {
+            System.out.println("이미 사용중인 ID야");
+            continue;
+          }
+          break;
+        }
+        System.out.printf("비밀번호 : ");
+        String password = sc.nextLine();
+        System.out.printf("이름 : ");
+        String name = sc.nextLine();
+
+        Member member = new Member(id, regDate, loginId, password, name);
+        members.add(member);
+
+        System.out.printf("%d번 회원이 가입되었습니다\n", id);
+      } else if (cmd.equals("article list")) {
         if (articles.size() == 0) {
           System.out.println("게시글이 없습니다");
           continue;
@@ -142,14 +169,23 @@ public class Main {
     }
   }
 
+  private static boolean isJoinableLoginId(String loginId) {
+    for (int i = 0; i < members.size(); i++) {
+      Member member = members.get(i);
+      if (member.loginId.equals(loginId)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   private static void makeTestData() {
     System.out.println("테스트를 위한 데이터를 생성합니다.");
-    articles.add(new Article(1,"2024-12-12 12:12:12",test.getNowDateTimeStr(),"제목 1","내용 1"));
-    articles.add(new Article(2,test.getNowDateTimeStr(),test.getNowDateTimeStr(),"제목 2","내용 2"));
-    articles.add(new Article(3,test.getNowDateTimeStr(),test.getNowDateTimeStr(),"제목 3","내용 3"));
+    articles.add(new Article(1, "2024-12-12 12:12:12", test.getNowDateTimeStr(), "제목 1", "내용 1"));
+    articles.add(new Article(2, test.getNowDateTimeStr(), test.getNowDateTimeStr(), "제목 2", "내용 2"));
+    articles.add(new Article(3, test.getNowDateTimeStr(), test.getNowDateTimeStr(), "제목 3", "내용 3"));
   }
 }
-
 
 
 class Article {
@@ -165,5 +201,22 @@ class Article {
     this.updateDate = updateDate;
     this.title = title;
     this.body = body;
+  }
+}
+
+class Member {
+  int id;
+  String regDate;
+
+  String loginId;
+  String password;
+  String name;
+
+  public Member(int id, String regDate, String loginId, String password, String name) {
+    this.id = id;
+    this.regDate = regDate;
+    this.loginId = loginId;
+    this.password = password;
+    this.name = name;
   }
 }
