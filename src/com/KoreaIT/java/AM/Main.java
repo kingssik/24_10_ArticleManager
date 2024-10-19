@@ -46,8 +46,19 @@ public class Main {
           }
           break;
         }
-        System.out.printf("비밀번호 : ");
-        String password = sc.nextLine();
+        String password = null;
+        while (true) {
+          System.out.printf("비밀번호 : ");
+          password = sc.nextLine();
+          System.out.printf("비밀번호 확인: ");
+          String passwordConfirm = sc.nextLine();
+
+          if(password.equals(passwordConfirm) == false){
+            System.out.println("비밀번호를 확인해주세요");
+            continue;
+          }
+          break;
+        }
         System.out.printf("이름 : ");
         String name = sc.nextLine();
 
@@ -170,8 +181,7 @@ public class Main {
   }
 
   private static boolean isJoinableLoginId(String loginId) {
-    for (int i = 0; i < members.size(); i++) {
-      Member member = members.get(i);
+    for (Member member : members) {
       if (member.loginId.equals(loginId)) {
         return false;
       }
