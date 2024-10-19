@@ -1,12 +1,10 @@
-package com.KoreaIT.java.AM;
+package com.KoreaIT.java.AM.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class test {
-
-
+public class Util {
 
   /** 현재 날짜와 시간을 반환하는 함수 (str)**/
   public static String getNowDateTimeStr() {
