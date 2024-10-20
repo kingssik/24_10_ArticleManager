@@ -130,7 +130,7 @@ public class ArticleController {
   }
 
   public void makeTestData() {
-    System.out.println("테스트를 위한 데이터를 생성합니다.");
+    System.out.println("테스트를 위한 게시글 데이터를 생성합니다.");
     articles.add(new Article(1, "2024-12-12 12:12:12", Util.getNowDateTimeStr(), "제목 1", "내용 1"));
     articles.add(new Article(2, Util.getNowDateTimeStr(), Util.getNowDateTimeStr(), "제목 2", "내용 2"));
     articles.add(new Article(3, Util.getNowDateTimeStr(), Util.getNowDateTimeStr(), "제목 3", "내용 3"));

@@ -14,6 +14,7 @@ public class App {
     ArticleController articleController = new ArticleController(sc);
 
     articleController.makeTestData();
+    memberController.makeTestData();
 
     while (true) {
       System.out.printf("명령어 ) ");
@@ -27,8 +28,11 @@ public class App {
         System.out.println("==프로그램 종료==");
         break;
       }
-
-      if (cmd.equals("member join")) {
+      if (cmd.equals("member login")) {
+        memberController.doLogin();
+      } else if (cmd.equals("member logout")) {
+        memberController.doLogout();
+      } else if (cmd.equals("member join")) {
         memberController.doJoin();
       } else if (cmd.equals("article list")) {
         articleController.showList();
