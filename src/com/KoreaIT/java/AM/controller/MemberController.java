@@ -7,12 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MemberController {
+public class MemberController extends Controller {
 
   private Scanner sc;
   private List<Member> members;
-  private boolean isLogined = false;
-  private Member loginedMember = null;
+
 
   public MemberController(Scanner sc) {
     this.sc = sc;
